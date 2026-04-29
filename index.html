@@ -112,35 +112,40 @@
                     <i class="fas fa-info-circle text-2xl mt-0.5"></i>
                     <p class="font-medium">當 y 是連續數值時使用，例如：房價、營收、溫度、金額。</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6 mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
                     <article class="section-card p-5 border-t-8 border-t-slate-400 flex flex-col">
-                        <h3 class="text-lg font-black">線性迴歸</h3>
-                        <p class="text-xs text-slate-500 mb-3">最基礎、可解釋性高。</p>
-                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-lr')">COPY</button><div class="code-scroll"><pre id="c-lr" class="pt-6 text-xs text-slate-300">from sklearn.linear_model import LinearRegression
+                        <h3 class="text-xl font-black">線性迴歸</h3>
+                        <p class="text-sm text-slate-700 mb-2">適合拿來當第一個 baseline，或想解釋「哪個特徵影響預測值」的情境。</p>
+                        <p class="text-xs text-slate-500 mb-3">注意：資料關係太彎、太複雜時表現可能不好。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-lr')">COPY</button><div class="code-scroll"><pre id="c-lr" class="pt-6 text-sm text-slate-300">from sklearn.linear_model import LinearRegression
 model = LinearRegression()</pre></div></div>
                     </article>
                     <article class="section-card p-5 border-t-8 border-t-brand-green flex flex-col">
-                        <h3 class="text-lg font-black">Ridge 迴歸</h3>
-                        <p class="text-xs text-slate-500 mb-3">L2 正規化，降低過擬合。</p>
-                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-ridge')">COPY</button><div class="code-scroll"><pre id="c-ridge" class="pt-6 text-xs text-green-300">from sklearn.linear_model import Ridge
+                        <h3 class="text-xl font-black">Ridge 迴歸</h3>
+                        <p class="text-sm text-slate-700 mb-2">適合特徵很多、彼此相關，且線性迴歸有過擬合疑慮時。</p>
+                        <p class="text-xs text-slate-500 mb-3">重點：<code class="bg-slate-100 px-1">alpha</code> 愈大，模型愈保守。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-ridge')">COPY</button><div class="code-scroll"><pre id="c-ridge" class="pt-6 text-sm text-green-300">from sklearn.linear_model import Ridge
 model = Ridge(alpha=1.0)</pre></div></div>
                     </article>
                     <article class="section-card p-5 border-t-8 border-t-brand-green flex flex-col">
-                        <h3 class="text-lg font-black">Lasso 迴歸</h3>
-                        <p class="text-xs text-slate-500 mb-3">L1 正規化，可讓部分特徵係數變成 0。</p>
-                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-lasso')">COPY</button><div class="code-scroll"><pre id="c-lasso" class="pt-6 text-xs text-green-300">from sklearn.linear_model import Lasso
+                        <h3 class="text-xl font-black">Lasso 迴歸</h3>
+                        <p class="text-sm text-slate-700 mb-2">適合特徵很多，想讓模型自動挑出比較重要的欄位時。</p>
+                        <p class="text-xs text-slate-500 mb-3">特色：部分係數可能變 0，常用於簡化模型。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-lasso')">COPY</button><div class="code-scroll"><pre id="c-lasso" class="pt-6 text-sm text-green-300">from sklearn.linear_model import Lasso
 model = Lasso(alpha=1.0)</pre></div></div>
                     </article>
                     <article class="section-card p-5 border-t-8 border-t-brand-blue flex flex-col">
-                        <h3 class="text-lg font-black">隨機森林</h3>
-                        <p class="text-xs text-slate-500 mb-3">穩定、好用，常作為 baseline。</p>
-                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-rfr')">COPY</button><div class="code-scroll"><pre id="c-rfr" class="pt-6 text-xs text-blue-300">from sklearn.ensemble import RandomForestRegressor
+                        <h3 class="text-xl font-black">隨機森林</h3>
+                        <p class="text-sm text-slate-700 mb-2">適合不知道資料關係長怎樣、想快速得到穩定結果時。</p>
+                        <p class="text-xs text-slate-500 mb-3">優點：少調參也能有不錯表現，可處理非線性。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-rfr')">COPY</button><div class="code-scroll"><pre id="c-rfr" class="pt-6 text-sm text-blue-300">from sklearn.ensemble import RandomForestRegressor
 model = RandomForestRegressor(random_state=42)</pre></div></div>
                     </article>
                     <article class="section-card p-5 border-t-8 border-t-brand-yellow flex flex-col">
-                        <h3 class="text-lg font-black">XGBoost</h3>
-                        <p class="text-xs text-slate-500 mb-3">進階模型，需安裝 xgboost。</p>
-                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-xgbr')">COPY</button><div class="code-scroll"><pre id="c-xgbr" class="pt-6 text-xs text-yellow-300">from xgboost import XGBRegressor
+                        <h3 class="text-xl font-black">XGBoost</h3>
+                        <p class="text-sm text-slate-700 mb-2">適合追求更高分數、資料表格型態且已完成基本清理時。</p>
+                        <p class="text-xs text-slate-500 mb-3">注意：需額外安裝 <code class="bg-slate-100 px-1">xgboost</code>，參數也較多。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-xgbr')">COPY</button><div class="code-scroll"><pre id="c-xgbr" class="pt-6 text-sm text-yellow-300">from xgboost import XGBRegressor
 model = XGBRegressor(random_state=42)</pre></div></div>
                     </article>
                 </div>
@@ -151,35 +156,40 @@ model = XGBRegressor(random_state=42)</pre></div></div>
                     <i class="fas fa-info-circle text-2xl mt-0.5"></i>
                     <p class="font-medium">當 y 是類別標籤時使用，例如：會不會流失、是否違約、風險等級。</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6 mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
                     <article class="section-card p-5 border-t-8 border-t-slate-400 flex flex-col">
-                        <h3 class="text-lg font-black">羅吉斯迴歸</h3>
-                        <p class="text-xs text-slate-500 mb-3">基礎分類器，可看機率。</p>
-                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-logr')">COPY</button><div class="code-scroll"><pre id="c-logr" class="pt-6 text-xs text-slate-300">from sklearn.linear_model import LogisticRegression
+                        <h3 class="text-xl font-black">羅吉斯迴歸</h3>
+                        <p class="text-sm text-slate-700 mb-2">適合二元分類 baseline，例如會不會流失、是否違約。</p>
+                        <p class="text-xs text-slate-500 mb-3">優點：可解釋、可輸出機率，報告時很好說明。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-logr')">COPY</button><div class="code-scroll"><pre id="c-logr" class="pt-6 text-sm text-slate-300">from sklearn.linear_model import LogisticRegression
 model = LogisticRegression(max_iter=1000)</pre></div></div>
                     </article>
                     <article class="section-card p-5 border-t-8 border-t-brand-blue flex flex-col">
-                        <h3 class="text-lg font-black">SVC</h3>
-                        <p class="text-xs text-slate-500 mb-3">支援向量機；C 愈小正規化愈強。</p>
-                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-svc')">COPY</button><div class="code-scroll"><pre id="c-svc" class="pt-6 text-xs text-blue-300">from sklearn.svm import SVC
+                        <h3 class="text-xl font-black">SVC</h3>
+                        <p class="text-sm text-slate-700 mb-2">適合資料量不太大、類別邊界可能不是直線的分類問題。</p>
+                        <p class="text-xs text-slate-500 mb-3">重點：<code class="bg-slate-100 px-1">C</code> 愈小正規化愈強；資料大時可能較慢。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-svc')">COPY</button><div class="code-scroll"><pre id="c-svc" class="pt-6 text-sm text-blue-300">from sklearn.svm import SVC
 model = SVC(C=1.0, probability=True)</pre></div></div>
                     </article>
                     <article class="section-card p-5 border-t-8 border-t-brand-blue flex flex-col">
-                        <h3 class="text-lg font-black">隨機森林</h3>
-                        <p class="text-xs text-slate-500 mb-3">好上手，能處理非線性。</p>
-                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-rfc')">COPY</button><div class="code-scroll"><pre id="c-rfc" class="pt-6 text-xs text-blue-300">from sklearn.ensemble import RandomForestClassifier
+                        <h3 class="text-xl font-black">隨機森林</h3>
+                        <p class="text-sm text-slate-700 mb-2">適合做第一個穩定的分類模型，尤其是欄位多、關係複雜時。</p>
+                        <p class="text-xs text-slate-500 mb-3">優點：不太需要標準化，通常比單棵決策樹穩定。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-rfc')">COPY</button><div class="code-scroll"><pre id="c-rfc" class="pt-6 text-sm text-blue-300">from sklearn.ensemble import RandomForestClassifier
 model = RandomForestClassifier(random_state=42)</pre></div></div>
                     </article>
                     <article class="section-card p-5 border-t-8 border-t-brand-yellow flex flex-col">
-                        <h3 class="text-lg font-black">XGBoost</h3>
-                        <p class="text-xs text-slate-500 mb-3">進階分類模型，需安裝 xgboost。</p>
-                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-xgbc')">COPY</button><div class="code-scroll"><pre id="c-xgbc" class="pt-6 text-xs text-yellow-300">from xgboost import XGBClassifier
+                        <h3 class="text-xl font-black">XGBoost</h3>
+                        <p class="text-sm text-slate-700 mb-2">適合追求較高分類表現，常用於表格資料競賽與專案。</p>
+                        <p class="text-xs text-slate-500 mb-3">注意：需要安裝套件，且建議先有 baseline 再使用。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-xgbc')">COPY</button><div class="code-scroll"><pre id="c-xgbc" class="pt-6 text-sm text-yellow-300">from xgboost import XGBClassifier
 model = XGBClassifier(random_state=42)</pre></div></div>
                     </article>
                     <article class="section-card p-5 border-t-8 border-t-red-500 flex flex-col">
-                        <h3 class="text-lg font-black">不平衡分類</h3>
-                        <p class="text-xs text-slate-500 mb-3">正負樣本差很多時先試。</p>
-                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-balanced')">COPY</button><div class="code-scroll"><pre id="c-balanced" class="pt-6 text-xs text-red-300">from sklearn.ensemble import RandomForestClassifier
+                        <h3 class="text-xl font-black">不平衡分類</h3>
+                        <p class="text-sm text-slate-700 mb-2">適合少數類別很重要的任務，例如盜刷、違約、流失。</p>
+                        <p class="text-xs text-slate-500 mb-3">重點：不要只看 Accuracy，請搭配 F1 / confusion matrix。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-balanced')">COPY</button><div class="code-scroll"><pre id="c-balanced" class="pt-6 text-sm text-red-300">from sklearn.ensemble import RandomForestClassifier
 model = RandomForestClassifier(
     class_weight='balanced',
     random_state=42
