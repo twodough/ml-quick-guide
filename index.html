@@ -303,63 +303,88 @@ print(f"Accuracy: {score:.4f}")</pre>
             </div>
         </div>
 
-        <!-- Advanced ML Techniques Section (New from Slides) -->
-        <div class="mt-12 bg-white border-4 border-brand-slate shadow-hard p-6 mb-20">
+        <!-- Advanced ML Techniques Section -->
+        <div class="mt-12 mb-24">
             <h2 class="text-2xl font-black mb-6 border-b-4 border-brand-slate pb-2 text-brand-slate">
                 <i class="fas fa-rocket mr-2 text-brand-green"></i>進階實務技巧 (Tips)
             </h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Data Sampling -->
-                <div class="border-2 border-slate-200 p-4">
-                    <h4 class="font-bold text-lg mb-2 text-brand-blue">如何處理過多資料列？</h4>
-                    <ul class="text-sm list-disc ml-5 space-y-1 text-slate-600">
-                        <li>讀取時跳過：<code class="bg-slate-100 px-1 text-pink-600">pd.read_csv(..., skiprows=...)</code></li>
-                        <li>隨機取樣：<code class="bg-slate-100 px-1 text-pink-600">df.sample(frac=0.1)</code></li>
-                    </ul>
+                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col">
+                    <h3 class="text-xl font-black mb-1">大量資料抽樣</h3>
+                    <p class="text-sm text-slate-500 mb-3">當原始資料太大跑不動時，使用隨機取樣。</p>
+                    <div class="relative bg-brand-slate text-slate-300 p-4 font-mono w-full">
+                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm" onclick="copyCode('code-sampling')">COPY</button>
+                        <div class="overflow-x-auto w-full">
+                            <pre id="code-sampling" class="pt-6 code-text"># 隨機取樣 10% 的資料
+df_sample = df.sample(frac=0.1, random_state=42)
+
+# 或者手動跳過讀取行數 (於 read_csv 使用)
+# df = pd.read_csv('big_data.csv', skiprows=lambda i: i > 0 and random.random() > 0.1)</pre>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Column Selection -->
-                <div class="border-2 border-slate-200 p-4">
-                    <h4 class="font-bold text-lg mb-2 text-brand-blue">如何減少資料欄位？</h4>
-                    <ul class="text-sm list-disc ml-5 space-y-1 text-slate-600">
-                        <li>刪除遺漏值過多：<code class="bg-slate-100 px-1 text-pink-600">Series.isnull()</code> 判斷</li>
-                        <li>刪除變異數過小：<code class="bg-slate-100 px-1 text-pink-600">Series.var()</code> 判斷</li>
-                        <li>相關係數篩選：<code class="bg-slate-100 px-1 text-pink-600">df.corr()</code></li>
-                    </ul>
+                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col">
+                    <h3 class="text-xl font-black mb-1">特徵欄位篩選</h3>
+                    <p class="text-sm text-slate-500 mb-3">排除遺漏值過多或變異數過小的無用特徵。</p>
+                    <div class="relative bg-brand-slate text-slate-300 p-4 font-mono w-full">
+                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm" onclick="copyCode('code-selection')">COPY</button>
+                        <div class="overflow-x-auto w-full">
+                            <pre id="code-selection" class="pt-6 code-text"># 檢查遺漏值比例
+null_ratio = df.isnull().mean()
+df_filtered = df.loc[:, null_ratio < 0.5]
+
+# 檢查變異數 (排除數值幾乎都一樣的欄位)
+df_num = df.select_dtypes(include='number')
+low_var = df_num.columns[df_num.var() < 0.01]</pre>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Regularization -->
-                <div class="border-2 border-slate-200 p-4">
-                    <h4 class="font-bold text-lg mb-2 text-brand-blue">正規化參數說明</h4>
-                    <table class="text-[11px] w-full border-collapse">
-                        <tr class="bg-slate-100">
-                            <th class="border p-1">模型</th>
-                            <th class="border p-1">參數</th>
-                            <th class="border p-1">說明</th>
-                        </tr>
-                        <tr>
-                            <td class="border p-1 font-mono">Ridge / Lasso</td>
-                            <td class="border p-1 font-mono">alpha</td>
-                            <td class="border p-1">愈大，正規化強度愈高</td>
-                        </tr>
-                        <tr>
-                            <td class="border p-1 font-mono">LogR / SVC</td>
-                            <td class="border p-1 font-mono">C</td>
-                            <td class="border p-1 text-red-600">愈小，正規化強度愈高</td>
-                        </tr>
-                    </table>
+                <!-- Regularization Table -->
+                <div class="bg-brand-lightblue border-4 border-brand-slate p-5 shadow-hard flex flex-col">
+                    <h3 class="text-xl font-black mb-1">正規化強度對照</h3>
+                    <p class="text-sm text-slate-700 mb-4">防止過擬合的參數調整方向。</p>
+                    <div class="bg-white border-2 border-brand-slate overflow-hidden">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-brand-slate text-white font-bold">
+                                <tr>
+                                    <th class="p-2 border-r border-slate-600">模型</th>
+                                    <th class="p-2 border-r border-slate-600">參數</th>
+                                    <th class="p-2">強度方向</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-xs">
+                                <tr class="border-b border-brand-slate">
+                                    <td class="p-2 font-mono">Ridge / Lasso</td>
+                                    <td class="p-2 font-mono">alpha</td>
+                                    <td class="p-2 font-bold text-brand-green">愈大愈強 (獎勵簡單模型)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 font-mono">LogR / SVC</td>
+                                    <td class="p-2 font-mono">C</td>
+                                    <td class="p-2 font-bold text-red-600">愈小愈強 (對抗雜訊)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
-                <!-- Model Evaluation -->
-                <div class="border-2 border-slate-200 p-4">
-                    <h4 class="font-bold text-lg mb-2 text-brand-blue">基準模型 (Baseline)</h4>
-                    <p class="text-xs text-slate-500 mb-2">評估模型是否真的有效，應對比：</p>
-                    <ul class="text-sm list-disc ml-5 space-y-1 text-slate-600">
-                        <li>迴歸：使用 <code class="bg-slate-100 px-1">y</code> 的平均值作為預測。</li>
-                        <li>分類：使用眾數或隨機猜測作為預測。</li>
-                        <li>設定：<code class="bg-slate-100 px-1 text-pink-600">class_weight='balanced'</code> 處理不平衡。</li>
-                    </ul>
+                <!-- Imbalanced Handling -->
+                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col">
+                    <h3 class="text-xl font-black mb-1">內建不平衡處理</h3>
+                    <p class="text-sm text-slate-500 mb-3">不用 SMOTE 也能處理類別權重。</p>
+                    <div class="relative bg-brand-slate text-slate-300 p-4 font-mono w-full">
+                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm" onclick="copyCode('code-weight')">COPY</button>
+                        <div class="overflow-x-auto w-full">
+                            <pre id="code-weight" class="pt-6 code-text"># 在初始化模型時加入此參數
+model = RandomForestClassifier(class_weight='balanced')
+model = LogisticRegression(class_weight='balanced')</pre>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
