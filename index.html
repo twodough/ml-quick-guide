@@ -104,10 +104,12 @@
                     <h3 class="text-xl font-black mb-1">線性迴歸</h3>
                     <p class="text-xs text-slate-500 mb-3 font-mono">Linear Regression</p>
                     <p class="text-sm flex-grow mb-4">解釋性高，適用於觀察特徵與目標間的線性關聯。</p>
-                    <div class="relative bg-brand-slate text-slate-300 p-4 font-mono overflow-x-auto">
-                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate" onclick="copyCode('code-lr')">COPY</button>
-                        <pre id="code-lr" class="pt-4 code-text">from sklearn.linear_model import LinearRegression
+                    <div class="relative bg-brand-slate text-slate-300 p-4 font-mono w-full">
+                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-lr')">COPY</button>
+                        <div class="overflow-x-auto w-full">
+                            <pre id="code-lr" class="pt-6 code-text">from sklearn.linear_model import LinearRegression
 model = LinearRegression()</pre>
+                        </div>
                     </div>
                 </div>
 
@@ -116,10 +118,12 @@ model = LinearRegression()</pre>
                     <h3 class="text-xl font-black mb-1">隨機森林</h3>
                     <p class="text-xs text-slate-500 mb-3 font-mono">Random Forest Regressor</p>
                     <p class="text-sm flex-grow mb-4">穩定度高、抗雜訊強。實務上推薦作為 Baseline 模型。</p>
-                    <div class="relative bg-brand-slate text-green-300 p-4 font-mono overflow-x-auto">
-                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate" onclick="copyCode('code-rfr')">COPY</button>
-                        <pre id="code-rfr" class="pt-4 code-text">from sklearn.ensemble import RandomForestRegressor
+                    <div class="relative bg-brand-slate text-green-300 p-4 font-mono w-full">
+                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-rfr')">COPY</button>
+                        <div class="overflow-x-auto w-full">
+                            <pre id="code-rfr" class="pt-6 code-text">from sklearn.ensemble import RandomForestRegressor
 model = RandomForestRegressor(random_state=42)</pre>
+                        </div>
                     </div>
                 </div>
 
@@ -128,10 +132,12 @@ model = RandomForestRegressor(random_state=42)</pre>
                     <h3 class="text-xl font-black mb-1">XGBoost</h3>
                     <p class="text-xs text-slate-500 mb-3 font-mono">XGBRegressor</p>
                     <p class="text-sm flex-grow mb-4">效能強大，適合追求極致準確率的任務。</p>
-                    <div class="relative bg-brand-slate text-yellow-300 p-4 font-mono overflow-x-auto">
-                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate" onclick="copyCode('code-xgbr')">COPY</button>
-                        <pre id="code-xgbr" class="pt-4 code-text">from xgboost import XGBRegressor
+                    <div class="relative bg-brand-slate text-yellow-300 p-4 font-mono w-full">
+                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-xgbr')">COPY</button>
+                        <div class="overflow-x-auto w-full">
+                            <pre id="code-xgbr" class="pt-6 code-text">from xgboost import XGBRegressor
 model = XGBRegressor(n_estimators=100)</pre>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -150,10 +156,12 @@ model = XGBRegressor(n_estimators=100)</pre>
                     <h3 class="text-xl font-black mb-1">羅吉斯迴歸</h3>
                     <p class="text-xs text-slate-500 mb-3 font-mono">Logistic Regression</p>
                     <p class="text-sm flex-grow mb-4">基礎分類器，可輸出機率值供門檻設定。</p>
-                    <div class="relative bg-brand-slate text-slate-300 p-4 font-mono overflow-x-auto">
-                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate" onclick="copyCode('code-logr')">COPY</button>
-                        <pre id="code-logr" class="pt-4 code-text">from sklearn.linear_model import LogisticRegression
+                    <div class="relative bg-brand-slate text-slate-300 p-4 font-mono w-full">
+                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-logr')">COPY</button>
+                        <div class="overflow-x-auto w-full">
+                            <pre id="code-logr" class="pt-6 code-text">from sklearn.linear_model import LogisticRegression
 model = LogisticRegression()</pre>
+                        </div>
                     </div>
                 </div>
 
@@ -162,10 +170,12 @@ model = LogisticRegression()</pre>
                     <h3 class="text-xl font-black mb-1">隨機森林</h3>
                     <p class="text-xs text-slate-500 mb-3 font-mono">Random Forest Classifier</p>
                     <p class="text-sm flex-grow mb-4">最通用的分類模型，不易過度擬合 (Overfitting)。</p>
-                    <div class="relative bg-brand-slate text-blue-300 p-4 font-mono overflow-x-auto">
-                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate" onclick="copyCode('code-rfc')">COPY</button>
-                        <pre id="code-rfc" class="pt-4 code-text">from sklearn.ensemble import RandomForestClassifier
+                    <div class="relative bg-brand-slate text-blue-300 p-4 font-mono w-full">
+                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-rfc')">COPY</button>
+                        <div class="overflow-x-auto w-full">
+                            <pre id="code-rfc" class="pt-6 code-text">from sklearn.ensemble import RandomForestClassifier
 model = RandomForestClassifier(random_state=42)</pre>
+                        </div>
                     </div>
                 </div>
 
@@ -174,10 +184,12 @@ model = RandomForestClassifier(random_state=42)</pre>
                     <h3 class="text-xl font-black mb-1">XGBoost</h3>
                     <p class="text-xs text-slate-500 mb-3 font-mono">XGBClassifier</p>
                     <p class="text-sm flex-grow mb-4">梯度提升演算法，通常能取得最佳的 F1-score。</p>
-                    <div class="relative bg-brand-slate text-yellow-300 p-4 font-mono overflow-x-auto">
-                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate" onclick="copyCode('code-xgbc')">COPY</button>
-                        <pre id="code-xgbc" class="pt-4 code-text">from xgboost import XGBClassifier
+                    <div class="relative bg-brand-slate text-yellow-300 p-4 font-mono w-full">
+                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-xgbc')">COPY</button>
+                        <div class="overflow-x-auto w-full">
+                            <pre id="code-xgbc" class="pt-6 code-text">from xgboost import XGBClassifier
 model = XGBClassifier()</pre>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -188,9 +200,10 @@ model = XGBClassifier()</pre>
             <h2 class="text-2xl font-black mb-4 border-b-4 border-brand-slate pb-2">
                 <i class="fas fa-play-circle mr-2 text-brand-blue"></i>標準訓練流程 (Pipeline)
             </h2>
-            <div class="relative bg-brand-slate text-white p-6 font-mono overflow-x-auto">
-                <button class="absolute top-2 right-2 bg-white text-brand-slate px-4 py-2 font-bold border-2 border-brand-slate shadow-hard-sm" onclick="copyCode('code-pipeline')">COPY FULL CODE</button>
-                <pre id="code-pipeline" class="text-sm leading-relaxed">
+            <div class="relative bg-brand-slate text-white p-6 font-mono w-full">
+                <button class="absolute top-2 right-2 bg-white text-brand-slate px-4 py-2 font-bold border-2 border-brand-slate shadow-hard-sm z-20 active:translate-y-1 transition-all" onclick="copyCode('code-pipeline')">COPY FULL CODE</button>
+                <div class="overflow-x-auto w-full">
+                    <pre id="code-pipeline" class="text-sm leading-relaxed pt-10">
 # 1. 切分資料
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -206,6 +219,7 @@ y_pred = model.predict(X_test)
 # 4. 評估分數
 score = model.score(X_test, y_test)
 print(f"Accuracy: {score:.4f}")</pre>
+                </div>
             </div>
         </div>
     </div>
