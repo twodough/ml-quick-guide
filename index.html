@@ -147,7 +147,7 @@ model = XGBRegressor(n_estimators=100)</pre>
         <div id="content-classification" class="hidden">
             <div class="bg-brand-blue text-white p-4 border-4 border-brand-slate shadow-hard mb-8 flex items-center">
                 <i class="fas fa-info-circle text-2xl mr-3"></i>
-                <p class="font-medium">應用情境：目標變數 (y) 為類別（例如：預測流失/不流失、是/否）。</p>
+                <p class="font-medium">應用情境：目標變數 (y) 為離散類別（例如：客戶流失預測、信用卡盜刷偵測、違約風險評估）。</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
@@ -155,7 +155,7 @@ model = XGBRegressor(n_estimators=100)</pre>
                 <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col border-t-8 border-t-slate-400">
                     <h3 class="text-xl font-black mb-1">羅吉斯迴歸</h3>
                     <p class="text-xs text-slate-500 mb-3 font-mono">Logistic Regression</p>
-                    <p class="text-sm flex-grow mb-4">基礎分類器，可輸出機率值供門檻設定。</p>
+                    <p class="text-sm flex-grow mb-4">基礎分類器。輸出結果附帶機率意義，利於風險評估與後續決策設定閾值。</p>
                     <div class="relative bg-brand-slate text-slate-300 p-4 font-mono w-full">
                         <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-logr')">COPY</button>
                         <div class="overflow-x-auto w-full">
@@ -169,7 +169,7 @@ model = LogisticRegression()</pre>
                 <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col border-t-8 border-t-brand-blue">
                     <h3 class="text-xl font-black mb-1">隨機森林</h3>
                     <p class="text-xs text-slate-500 mb-3 font-mono">Random Forest Classifier</p>
-                    <p class="text-sm flex-grow mb-4">最通用的分類模型，不易過度擬合 (Overfitting)。</p>
+                    <p class="text-sm flex-grow mb-4">最通用的分類模型，透過多棵決策樹投票，能有效處理特徵間的非線性關係。</p>
                     <div class="relative bg-brand-slate text-blue-300 p-4 font-mono w-full">
                         <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-rfc')">COPY</button>
                         <div class="overflow-x-auto w-full">
@@ -183,13 +183,88 @@ model = RandomForestClassifier(random_state=42)</pre>
                 <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col border-t-8 border-t-brand-yellow">
                     <h3 class="text-xl font-black mb-1">XGBoost</h3>
                     <p class="text-xs text-slate-500 mb-3 font-mono">XGBClassifier</p>
-                    <p class="text-sm flex-grow mb-4">梯度提升演算法，通常能取得最佳的 F1-score。</p>
+                    <p class="text-sm flex-grow mb-4">效能頂尖的 Boosting 演算法，在各類競賽與實務任務中表現卓越。</p>
                     <div class="relative bg-brand-slate text-yellow-300 p-4 font-mono w-full">
                         <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-xgbc')">COPY</button>
                         <div class="overflow-x-auto w-full">
                             <pre id="code-xgbc" class="pt-6 code-text">from xgboost import XGBClassifier
 model = XGBClassifier()</pre>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Multi-class Section -->
+            <div class="bg-white border-4 border-brand-slate p-6 shadow-hard mb-12">
+                <h3 class="text-xl font-black mb-4 flex items-center">
+                    <i class="fas fa-layer-group mr-2 text-brand-blue"></i>多類別分類策略 (Multi-class)
+                </h3>
+                <p class="text-sm mb-6 text-slate-700 bg-brand-lightblue p-3 border-l-4 border-brand-blue">
+                    當目標變數包含 3 個或以上的類別（例如：風險等級 A, B, C）時，可使用 OvR (One-vs-Rest) 策略。
+                </p>
+                <div class="relative bg-brand-slate text-white p-4 font-mono w-full">
+                    <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-ovr')">COPY</button>
+                    <div class="overflow-x-auto w-full">
+                        <pre id="code-ovr" class="pt-6 code-text">from sklearn.multiclass import OneVsRestClassifier
+from sklearn.linear_model import LogisticRegression
+
+base_model = LogisticRegression()
+model = OneVsRestClassifier(base_model)</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preprocessing Section -->
+        <div class="mt-12 bg-white border-4 border-brand-slate shadow-hard p-6">
+            <h2 class="text-2xl font-black mb-4 border-b-4 border-brand-slate pb-2">
+                <i class="fas fa-tools mr-2 text-brand-yellow"></i>資料前處理 (Preprocessing)
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- One-Hot -->
+                <div class="bg-brand-lightyellow border-4 border-brand-slate p-5 shadow-hard flex flex-col">
+                    <h3 class="text-xl font-black mb-1">獨熱編碼</h3>
+                    <p class="text-xs text-slate-500 mb-3 font-mono">One-Hot Encoding</p>
+                    <p class="text-sm mb-4">針對「無順序性」的類別特徵（如部門、城市）。</p>
+                    <div class="relative bg-brand-slate text-yellow-100 p-4 font-mono w-full">
+                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-ohe')">COPY</button>
+                        <div class="overflow-x-auto w-full">
+                            <pre id="code-ohe" class="pt-6 code-text">import pandas as pd
+df_encoded = pd.get_dummies(df, columns=['category_col'])</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Label Encoding -->
+                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col">
+                    <h3 class="text-xl font-black mb-1">標籤編碼</h3>
+                    <p class="text-xs text-slate-500 mb-3 font-mono">Label Encoding</p>
+                    <p class="text-sm mb-4">針對「有順序性」的類別特徵（如學歷、職等）。</p>
+                    <div class="relative bg-brand-slate text-slate-300 p-4 font-mono w-full">
+                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-le')">COPY</button>
+                        <div class="overflow-x-auto w-full">
+                            <pre id="code-le" class="pt-6 code-text">from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+df['col'] = le.fit_transform(df['col'])</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Imbalanced Data -->
+            <div class="bg-slate-100 border-4 border-brand-slate p-6 shadow-hard mb-8">
+                <h3 class="text-xl font-black mb-4 flex items-center">
+                    <i class="fas fa-balance-scale mr-2 text-red-600"></i>不平衡資料處理 (Imbalanced Data)
+                </h3>
+                <p class="text-sm mb-6 text-slate-700">當正負樣本比例懸殊時（如盜刷僅 1%），建議使用過取樣 (Over-sampling)。</p>
+                <div class="relative bg-brand-slate text-white p-4 font-mono w-full">
+                    <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-smote')">COPY</button>
+                    <div class="overflow-x-auto w-full">
+                        <pre id="code-smote" class="pt-6 code-text"># 需安裝 imbalanced-learn
+from imblearn.over_sampling import SMOTE
+sm = SMOTE(random_state=42)
+X_res, y_res = sm.fit_resample(X_train, y_train)</pre>
                     </div>
                 </div>
             </div>
