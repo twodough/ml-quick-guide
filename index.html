@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-    
     <script>
         tailwind.config = {
             theme: {
@@ -31,8 +30,8 @@
                         }
                     },
                     boxShadow: {
-                        'hard': '4px 4px 0px 0px rgba(15,23,42,1)',
-                        'hard-sm': '2px 2px 0px 0px rgba(15,23,42,1)',
+                        hard: '4px 4px 0px 0px rgba(15,23,42,1)',
+                        'hard-sm': '2px 2px 0px 0px rgba(15,23,42,1)'
                     }
                 }
             }
@@ -40,281 +39,328 @@
     </script>
     <style>
         body { background-color: #F1F5F9; color: #0F172A; overflow-x: hidden; }
+        pre { scrollbar-width: thin; scrollbar-color: #475569 #0F172A; }
         pre::-webkit-scrollbar { height: 6px; }
         pre::-webkit-scrollbar-track { background: #0F172A; }
         pre::-webkit-scrollbar-thumb { background-color: #475569; }
-        .code-container { position: relative; background-color: #0F172A; padding: 1.5rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; border: 2px solid #0F172A; }
+        .code-box { position: relative; background: #0F172A; color: white; padding: 1rem; border: 2px solid #0F172A; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+        .code-scroll { overflow-x: auto; width: 100%; }
+        .copy-btn { position: absolute; top: .5rem; right: .5rem; z-index: 20; background: white; color: #0F172A; border: 2px solid #0F172A; font-weight: 900; font-size: .7rem; padding: .15rem .45rem; box-shadow: 2px 2px 0px 0px rgba(15,23,42,1); }
+        .copy-btn:active { transform: translate(2px, 2px); box-shadow: none; }
+        .section-card { background: white; border: 4px solid #0F172A; box-shadow: 4px 4px 0px 0px rgba(15,23,42,1); }
+        .tag { display: inline-block; font-size: .7rem; font-weight: 900; padding: .15rem .45rem; border: 2px solid #0F172A; }
+        @media (max-width: 640px) {
+            .code-scroll pre { font-size: .74rem; line-height: 1.35; }
+            .copy-btn { font-size: .62rem; padding: .1rem .35rem; }
+        }
     </style>
 </head>
 <body class="p-3 sm:p-6 lg:p-8 min-h-screen">
-
     <div class="max-w-6xl mx-auto w-full">
-        <!-- Header -->
-        <header class="mb-8 relative flex flex-col items-start">
-            <div class="bg-white border-4 border-brand-slate p-6 shadow-hard w-full">
-                <div class="flex items-center mb-2">
+        <header class="mb-8">
+            <div class="section-card p-5 sm:p-6">
+                <div class="flex items-center mb-3">
                     <div class="bg-brand-slate text-white p-2 mr-3 border-2 border-brand-slate">
-                        <i class="fas fa-terminal text-2xl"></i>
+                        <i class="fas fa-terminal text-xl sm:text-2xl"></i>
                     </div>
-                    <h1 class="text-2xl sm:text-3xl font-black uppercase tracking-tight text-brand-slate">
+                    <h1 class="text-2xl sm:text-4xl font-black tracking-tight text-brand-slate">
                         Machine Learning 實戰指引
                     </h1>
                 </div>
-                <p class="text-sm sm:text-lg font-medium text-slate-700 mt-2 border-t-2 border-slate-200 pt-2">
-                    機器學習模型選擇與實作工具庫。請根據分析目標選擇對應模組。
+                <p class="text-sm sm:text-lg font-medium text-slate-700 border-t-2 border-slate-200 pt-3">
+                    給課堂專案使用的快速手冊：先選模型，再把程式碼貼進完整訓練流程。
                 </p>
             </div>
         </header>
 
-        <!-- Selector -->
-        <div class="flex flex-col sm:flex-row justify-center gap-4 mb-8 w-full">
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="section-card p-4 bg-brand-lightyellow">
+                <div class="tag bg-white mb-2">STEP 1</div>
+                <h2 class="font-black text-lg">判斷 y 是什麼</h2>
+                <p class="text-sm text-slate-700">數值 → 迴歸；類別 → 分類。</p>
+            </div>
+            <div class="section-card p-4 bg-white">
+                <div class="tag bg-brand-lightblue mb-2">STEP 2</div>
+                <h2 class="font-black text-lg">複製模型程式碼</h2>
+                <p class="text-sm text-slate-700">把模型卡片中的兩行貼到完整流程的「初始化模型」。</p>
+            </div>
+            <div class="section-card p-4 bg-brand-lightgreen">
+                <div class="tag bg-white mb-2">STEP 3</div>
+                <h2 class="font-black text-lg">依資料狀況加工具</h2>
+                <p class="text-sm text-slate-700">有文字欄位用 OneHotEncoder；資料不平衡用 class_weight 或 SMOTE。</p>
+            </div>
+        </section>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-8">
             <button onclick="switchTab('regression')" id="btn-regression" class="w-full sm:flex-1 bg-brand-lightgreen border-4 border-brand-slate px-4 py-4 text-xl font-bold shadow-hard transition-all">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <i class="fas fa-chart-line text-2xl mr-3 text-brand-green"></i>
-                        <span>連續數值預測</span>
-                    </div>
-                    <span class="text-xs font-bold bg-brand-green text-white px-2 py-1">REGRESSION</span>
+                <div class="flex items-center justify-between gap-3">
+                    <span><i class="fas fa-chart-line mr-2 text-brand-green"></i>連續數值預測</span>
+                    <span class="text-xs bg-brand-green text-white px-2 py-1">REGRESSION</span>
                 </div>
             </button>
-            <button onclick="switchTab('classification')" id="btn-classification" class="w-full sm:flex-1 bg-white border-4 border-brand-slate px-4 py-4 text-xl font-bold shadow-hard transition-all opacity-70 hover:opacity-100 text-slate-500">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <i class="fas fa-tags text-2xl mr-3"></i>
-                        <span>分類標籤預測</span>
-                    </div>
-                    <span class="text-xs font-bold bg-slate-500 text-white px-2 py-1">CLASSIFICATION</span>
+            <button onclick="switchTab('classification')" id="btn-classification" class="w-full sm:flex-1 bg-white border-4 border-brand-slate px-4 py-4 text-xl font-bold shadow-hard transition-all opacity-70 text-slate-500">
+                <div class="flex items-center justify-between gap-3">
+                    <span><i class="fas fa-tags mr-2"></i>分類標籤預測</span>
+                    <span class="text-xs bg-slate-500 text-white px-2 py-1">CLASSIFICATION</span>
                 </div>
             </button>
         </div>
 
-        <!-- REGRESSION -->
-        <div id="content-regression" class="block">
-            <div class="bg-brand-green text-white p-4 border-4 border-brand-slate shadow-hard mb-8 flex items-center">
-                <i class="fas fa-info-circle text-2xl mr-3"></i>
-                <p class="font-medium">應用情境：目標變數 (y) 為數值。範例：預測金額、溫度、房價。</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <!-- Linear -->
-                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col border-t-8 border-t-slate-400">
-                    <h3 class="text-lg font-black mb-1">線性迴歸</h3>
-                    <div class="code-container mt-auto">
-                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-lr')">COPY</button>
-                        <pre id="c-lr" class="text-slate-300 text-xs">from sklearn.linear_model import LinearRegression
-model = LinearRegression()</pre>
-                    </div>
+        <main>
+            <section id="content-regression" class="block">
+                <div class="bg-brand-green text-white p-4 border-4 border-brand-slate shadow-hard mb-6 flex items-start gap-3">
+                    <i class="fas fa-info-circle text-2xl mt-0.5"></i>
+                    <p class="font-medium">當 y 是連續數值時使用，例如：房價、營收、溫度、金額。</p>
                 </div>
-
-                <!-- Lasso -->
-                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col border-t-8 border-t-brand-green">
-                    <h3 class="text-lg font-black mb-1">Lasso 迴歸</h3>
-                    <p class="text-[10px] text-slate-500 mb-2">含 L1 正規化，可篩選特徵</p>
-                    <div class="code-container mt-auto">
-                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-lasso')">COPY</button>
-                        <pre id="c-lasso" class="text-green-300 text-xs">from sklearn.linear_model import Lasso
-model = Lasso(alpha=1.0)</pre>
-                    </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6 mb-8">
+                    <article class="section-card p-5 border-t-8 border-t-slate-400 flex flex-col">
+                        <h3 class="text-lg font-black">線性迴歸</h3>
+                        <p class="text-xs text-slate-500 mb-3">最基礎、可解釋性高。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-lr')">COPY</button><div class="code-scroll"><pre id="c-lr" class="pt-6 text-xs text-slate-300">from sklearn.linear_model import LinearRegression
+model = LinearRegression()</pre></div></div>
+                    </article>
+                    <article class="section-card p-5 border-t-8 border-t-brand-green flex flex-col">
+                        <h3 class="text-lg font-black">Ridge 迴歸</h3>
+                        <p class="text-xs text-slate-500 mb-3">L2 正規化，降低過擬合。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-ridge')">COPY</button><div class="code-scroll"><pre id="c-ridge" class="pt-6 text-xs text-green-300">from sklearn.linear_model import Ridge
+model = Ridge(alpha=1.0)</pre></div></div>
+                    </article>
+                    <article class="section-card p-5 border-t-8 border-t-brand-green flex flex-col">
+                        <h3 class="text-lg font-black">Lasso 迴歸</h3>
+                        <p class="text-xs text-slate-500 mb-3">L1 正規化，可讓部分特徵係數變成 0。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-lasso')">COPY</button><div class="code-scroll"><pre id="c-lasso" class="pt-6 text-xs text-green-300">from sklearn.linear_model import Lasso
+model = Lasso(alpha=1.0)</pre></div></div>
+                    </article>
+                    <article class="section-card p-5 border-t-8 border-t-brand-blue flex flex-col">
+                        <h3 class="text-lg font-black">隨機森林</h3>
+                        <p class="text-xs text-slate-500 mb-3">穩定、好用，常作為 baseline。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-rfr')">COPY</button><div class="code-scroll"><pre id="c-rfr" class="pt-6 text-xs text-blue-300">from sklearn.ensemble import RandomForestRegressor
+model = RandomForestRegressor(random_state=42)</pre></div></div>
+                    </article>
+                    <article class="section-card p-5 border-t-8 border-t-brand-yellow flex flex-col">
+                        <h3 class="text-lg font-black">XGBoost</h3>
+                        <p class="text-xs text-slate-500 mb-3">進階模型，需安裝 xgboost。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-xgbr')">COPY</button><div class="code-scroll"><pre id="c-xgbr" class="pt-6 text-xs text-yellow-300">from xgboost import XGBRegressor
+model = XGBRegressor(random_state=42)</pre></div></div>
+                    </article>
                 </div>
+            </section>
 
-                <!-- Random Forest -->
-                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col border-t-8 border-t-brand-green">
-                    <h3 class="text-lg font-black mb-1">隨機森林</h3>
-                    <div class="code-container mt-auto">
-                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-rfr')">COPY</button>
-                        <pre id="c-rfr" class="text-green-300 text-xs">from sklearn.ensemble import RandomForestRegressor
-model = RandomForestRegressor()</pre>
-                    </div>
+            <section id="content-classification" class="hidden">
+                <div class="bg-brand-blue text-white p-4 border-4 border-brand-slate shadow-hard mb-6 flex items-start gap-3">
+                    <i class="fas fa-info-circle text-2xl mt-0.5"></i>
+                    <p class="font-medium">當 y 是類別標籤時使用，例如：會不會流失、是否違約、風險等級。</p>
                 </div>
-
-                <!-- XGBoost -->
-                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col border-t-8 border-t-brand-yellow">
-                    <h3 class="text-lg font-black mb-1">XGBoost</h3>
-                    <div class="code-container mt-auto">
-                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-xgbr')">COPY</button>
-                        <pre id="c-xgbr" class="text-yellow-300 text-xs">from xgboost import XGBRegressor
-model = XGBRegressor()</pre>
-                    </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6 mb-8">
+                    <article class="section-card p-5 border-t-8 border-t-slate-400 flex flex-col">
+                        <h3 class="text-lg font-black">羅吉斯迴歸</h3>
+                        <p class="text-xs text-slate-500 mb-3">基礎分類器，可看機率。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-logr')">COPY</button><div class="code-scroll"><pre id="c-logr" class="pt-6 text-xs text-slate-300">from sklearn.linear_model import LogisticRegression
+model = LogisticRegression(max_iter=1000)</pre></div></div>
+                    </article>
+                    <article class="section-card p-5 border-t-8 border-t-brand-blue flex flex-col">
+                        <h3 class="text-lg font-black">SVC</h3>
+                        <p class="text-xs text-slate-500 mb-3">支援向量機；C 愈小正規化愈強。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-svc')">COPY</button><div class="code-scroll"><pre id="c-svc" class="pt-6 text-xs text-blue-300">from sklearn.svm import SVC
+model = SVC(C=1.0, probability=True)</pre></div></div>
+                    </article>
+                    <article class="section-card p-5 border-t-8 border-t-brand-blue flex flex-col">
+                        <h3 class="text-lg font-black">隨機森林</h3>
+                        <p class="text-xs text-slate-500 mb-3">好上手，能處理非線性。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-rfc')">COPY</button><div class="code-scroll"><pre id="c-rfc" class="pt-6 text-xs text-blue-300">from sklearn.ensemble import RandomForestClassifier
+model = RandomForestClassifier(random_state=42)</pre></div></div>
+                    </article>
+                    <article class="section-card p-5 border-t-8 border-t-brand-yellow flex flex-col">
+                        <h3 class="text-lg font-black">XGBoost</h3>
+                        <p class="text-xs text-slate-500 mb-3">進階分類模型，需安裝 xgboost。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-xgbc')">COPY</button><div class="code-scroll"><pre id="c-xgbc" class="pt-6 text-xs text-yellow-300">from xgboost import XGBClassifier
+model = XGBClassifier(random_state=42)</pre></div></div>
+                    </article>
+                    <article class="section-card p-5 border-t-8 border-t-red-500 flex flex-col">
+                        <h3 class="text-lg font-black">不平衡分類</h3>
+                        <p class="text-xs text-slate-500 mb-3">正負樣本差很多時先試。</p>
+                        <div class="code-box mt-auto"><button class="copy-btn" onclick="copyCode('c-balanced')">COPY</button><div class="code-scroll"><pre id="c-balanced" class="pt-6 text-xs text-red-300">from sklearn.ensemble import RandomForestClassifier
+model = RandomForestClassifier(
+    class_weight='balanced',
+    random_state=42
+)</pre></div></div>
+                    </article>
                 </div>
-            </div>
-        </div>
+            </section>
 
-        <!-- CLASSIFICATION -->
-        <div id="content-classification" class="hidden">
-            <div class="bg-brand-blue text-white p-4 border-4 border-brand-slate shadow-hard mb-8 flex items-center">
-                <i class="fas fa-info-circle text-2xl mr-3"></i>
-                <p class="font-medium">應用情境：目標變數 (y) 為類別。範例：預測流失、違約、垃圾郵件。</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <!-- Logistic -->
-                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col border-t-8 border-t-slate-400">
-                    <h3 class="text-lg font-black mb-1">羅吉斯迴歸</h3>
-                    <div class="code-container mt-auto">
-                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-logr')">COPY</button>
-                        <pre id="c-logr" class="text-slate-300 text-xs">from sklearn.linear_model import LogisticRegression
-model = LogisticRegression()</pre>
-                    </div>
-                </div>
-
-                <!-- SVC -->
-                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col border-t-8 border-t-brand-blue">
-                    <h3 class="text-lg font-black mb-1">支持向量機</h3>
-                    <p class="text-[10px] text-slate-500 mb-2">SVM 分類器</p>
-                    <div class="code-container mt-auto">
-                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-svc')">COPY</button>
-                        <pre id="c-svc" class="text-blue-300 text-xs">from sklearn. some_package import SVC # 教材多用 SVC
-from sklearn.svc import SVC
-model = SVC(probability=True)</pre>
-                    </div>
-                </div>
-
-                <!-- Random Forest Cls -->
-                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col border-t-8 border-t-brand-blue">
-                    <h3 class="text-lg font-black mb-1">隨機森林</h3>
-                    <div class="code-container mt-auto">
-                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-rfc')">COPY</button>
-                        <pre id="c-rfc" class="text-blue-300 text-xs">from sklearn.ensemble import RandomForestClassifier
-model = RandomForestClassifier()</pre>
-                    </div>
-                </div>
-
-                <!-- XGBoost Cls -->
-                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col border-t-8 border-t-brand-yellow">
-                    <h3 class="text-lg font-black mb-1">XGBoost</h3>
-                    <div class="code-container mt-auto">
-                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-xgbc')">COPY</button>
-                        <pre id="c-xgbc" class="text-yellow-300 text-xs">from xgboost import XGBClassifier
-model = XGBClassifier()</pre>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- The Essential Pipeline -->
-        <div class="mt-12 bg-white border-4 border-brand-slate shadow-hard p-6 mb-12">
-            <h2 class="text-2xl font-black mb-4 border-b-4 border-brand-slate pb-2">
-                <i class="fas fa-play-circle mr-2 text-brand-blue"></i>標準訓練與預測流程 (Pipeline)
-            </h2>
-            <p class="text-sm mb-4 text-slate-600">這是每個機器學習專案的基本框架，只需將模型部分替換即可。</p>
-            <div class="relative bg-brand-slate text-white p-6 font-mono w-full">
-                <button class="absolute top-2 right-2 bg-white text-brand-slate px-4 py-2 font-bold border-2 border-brand-slate shadow-hard-sm z-20 active:translate-y-1 transition-all" onclick="copyCode('main-pipeline')">COPY TEMPLATE</button>
-                <div class="overflow-x-auto w-full">
-                    <pre id="main-pipeline" class="text-sm leading-relaxed">
-# 1. 準備資料 (假設 X 是特徵, y 是目標)
+            <section class="section-card p-5 sm:p-6 mb-12">
+                <h2 class="text-2xl font-black mb-2 border-b-4 border-brand-slate pb-2">
+                    <i class="fas fa-play-circle mr-2 text-brand-blue"></i>完整流程：複製後替換 model
+                </h2>
+                <p class="text-sm text-slate-600 mb-5">如果你要用 Lasso，就把迴歸流程第 2 步改成 <code class="bg-slate-100 px-1 font-mono">model = Lasso(alpha=1.0)</code>。</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="border-4 border-brand-slate p-4 bg-brand-lightgreen shadow-hard-sm">
+                        <h3 class="font-black text-xl mb-3">迴歸完整流程</h3>
+                        <div class="code-box"><button class="copy-btn" onclick="copyCode('pipeline-reg')">COPY</button><div class="code-scroll"><pre id="pipeline-reg" class="pt-8 text-sm leading-relaxed"># 迴歸範例：預測連續數值
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+from sklearn.linear_model import Lasso
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
-# 2. 初始化模型 (範例：在這裡換成 Lasso, RandomForest 等)
-# model = Lasso(alpha=1.0) <--- 像這樣換掉
-from sklearn.ensemble import RandomForestClassifier
-model = RandomForestClassifier()
+# X = 特徵資料, y = 要預測的數值
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
 
-# 3. 訓練模型
+# 在這裡替換成你想用的迴歸模型
+model = Lasso(alpha=1.0)
+
 model.fit(X_train, y_train)
-
-# 4. 進行預測
 y_pred = model.predict(X_test)
 
-# 5. 評估準確度
-accuracy = model.score(X_test, y_test)
-print(f"Accuracy: {accuracy}")</pre>
-                </div>
-            </div>
-        </div>
+print('MAE:', mean_absolute_error(y_test, y_pred))
+print('MSE:', mean_squared_error(y_test, y_pred))
+print('R2:', r2_score(y_test, y_pred))</pre></div></div>
+                    </div>
+                    <div class="border-4 border-brand-slate p-4 bg-brand-lightblue shadow-hard-sm">
+                        <h3 class="font-black text-xl mb-3">分類完整流程</h3>
+                        <div class="code-box"><button class="copy-btn" onclick="copyCode('pipeline-cls')">COPY</button><div class="code-scroll"><pre id="pipeline-cls" class="pt-8 text-sm leading-relaxed"># 分類範例：預測類別標籤
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
 
-        <!-- Preprocessing -->
-        <div class="mt-12 bg-white border-4 border-brand-slate shadow-hard p-6 mb-12">
-            <h2 class="text-2xl font-black mb-4 border-b-4 border-brand-slate pb-2">
-                <i class="fas fa-tools mr-2 text-brand-yellow"></i>資料前處理 (Preprocessing)
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- OHE -->
-                <div class="bg-brand-lightyellow border-4 border-brand-slate p-5 shadow-hard">
-                    <h3 class="font-black mb-2">獨熱編碼 (Sklearn)</h3>
-                    <div class="code-container">
-                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-ohe')">COPY</button>
-                        <pre id="c-ohe" class="text-xs text-slate-300">from sklearn.preprocessing import OneHotEncoder
-enc = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
-X_train_encoded = enc.fit_transform(X_train[['category_col']])</pre>
-                    </div>
-                </div>
-                <!-- Scaler -->
-                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard">
-                    <h3 class="font-black mb-2">特徵縮放 (StandardScaler)</h3>
-                    <div class="code-container">
-                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-ss')">COPY</button>
-                        <pre id="c-ss" class="text-xs text-slate-300">from sklearn.preprocessing import StandardScaler
-scaler = StandardScaler()
-X_train_scaled = scaler.fit_transform(X_train)</pre>
-                    </div>
-                </div>
-            </div>
-        </div>
+# X = 特徵資料, y = 要預測的類別
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
 
-        <!-- Advanced ML Techniques Section -->
-        <div class="mt-12 mb-24">
-            <h2 class="text-2xl font-black mb-6 border-b-4 border-brand-slate pb-2 text-brand-slate">
-                <i class="fas fa-rocket mr-2 text-brand-green"></i>進階實務技巧 (Tips)
-            </h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Data Sampling -->
-                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col">
-                    <h3 class="text-xl font-black mb-1">大量資料抽樣</h3>
-                    <div class="code-container mt-2">
-                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('code-sampling')">COPY</button>
-                        <pre id="code-sampling" class="text-xs text-slate-300"># 隨機取樣 10% 資料
-df_sample = df.sample(frac=0.1, random_state=42)</pre>
-                    </div>
-                </div>
+# 在這裡替換成你想用的分類模型
+model = RandomForestClassifier(random_state=42)
 
-                <!-- Regularization Table -->
-                <div class="bg-brand-lightblue border-4 border-brand-slate p-5 shadow-hard flex flex-col">
-                    <h3 class="text-xl font-black mb-1">正規化參數對照</h3>
-                    <div class="bg-white border-2 border-brand-slate overflow-hidden mt-2 text-[10px]">
-                        <table class="w-full text-left">
-                            <thead class="bg-brand-slate text-white">
-                                <tr><th class="p-1">模型</th><th class="p-1">參數</th><th class="p-1">強度方向</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr class="border-b"><td class="p-1 font-mono">Ridge / Lasso</td><td class="p-1 font-mono">alpha</td><td class="p-1 text-brand-green">愈大愈強</td></tr>
-                                <tr><td class="p-1 font-mono">LogR / SVC</td><td class="p-1 font-mono">C</td><td class="p-1 text-red-600">愈小愈強</td></tr>
-                            </tbody>
-                        </table>
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+
+print('Accuracy:', accuracy_score(y_test, y_pred))
+print('F1:', f1_score(y_test, y_pred, average='weighted'))
+print('Confusion matrix:')
+print(confusion_matrix(y_test, y_pred))</pre></div></div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </section>
+
+            <section class="section-card p-5 sm:p-6 mb-12">
+                <h2 class="text-2xl font-black mb-2 border-b-4 border-brand-slate pb-2">
+                    <i class="fas fa-tools mr-2 text-brand-yellow"></i>資料前處理：最常用模板
+                </h2>
+                <p class="text-sm text-slate-600 mb-5">如果資料同時有數字欄位與文字欄位，建議用 <code class="bg-slate-100 px-1 font-mono">ColumnTransformer</code> 統一處理。</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="border-4 border-brand-slate p-4 bg-brand-lightyellow shadow-hard-sm">
+                        <h3 class="font-black text-xl mb-3">OneHotEncoder + StandardScaler</h3>
+                        <div class="code-box"><button class="copy-btn" onclick="copyCode('preprocess-basic')">COPY</button><div class="code-scroll"><pre id="preprocess-basic" class="pt-8 text-sm leading-relaxed">from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+numeric_features = ['age', 'income']
+categorical_features = ['city', 'job']
+
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', StandardScaler(), numeric_features),
+        ('cat', OneHotEncoder(handle_unknown='ignore'), categorical_features)
+    ]
+)</pre></div></div>
+                    </div>
+                    <div class="border-4 border-brand-slate p-4 bg-white shadow-hard-sm">
+                        <h3 class="font-black text-xl mb-3">接進 sklearn Pipeline</h3>
+                        <div class="code-box"><button class="copy-btn" onclick="copyCode('preprocess-pipeline')">COPY</button><div class="code-scroll"><pre id="preprocess-pipeline" class="pt-8 text-sm leading-relaxed">from sklearn.pipeline import Pipeline
+from sklearn.linear_model import LogisticRegression
+
+clf = Pipeline(steps=[
+    ('preprocess', preprocessor),
+    ('model', LogisticRegression(max_iter=1000))
+])
+
+clf.fit(X_train, y_train)
+y_pred = clf.predict(X_test)</pre></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-24">
+                <h2 class="text-2xl font-black mb-6 border-b-4 border-brand-slate pb-2">
+                    <i class="fas fa-rocket mr-2 text-brand-green"></i>進階實務技巧
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <article class="section-card p-5">
+                        <h3 class="text-xl font-black mb-2">大量資料抽樣</h3>
+                        <p class="text-sm text-slate-600 mb-3">資料太大跑不動時，先抽一小部分測流程。</p>
+                        <div class="code-box"><button class="copy-btn" onclick="copyCode('tip-sample')">COPY</button><div class="code-scroll"><pre id="tip-sample" class="pt-8 text-sm">df_sample = df.sample(frac=0.1, random_state=42)</pre></div></div>
+                    </article>
+                    <article class="section-card p-5">
+                        <h3 class="text-xl font-black mb-2">刪除遺漏過多欄位</h3>
+                        <p class="text-sm text-slate-600 mb-3">欄位缺太多，通常不適合直接丟進模型。</p>
+                        <div class="code-box"><button class="copy-btn" onclick="copyCode('tip-missing')">COPY</button><div class="code-scroll"><pre id="tip-missing" class="pt-8 text-sm">missing_ratio = df.isnull().mean()
+df = df.loc[:, missing_ratio < 0.5]</pre></div></div>
+                    </article>
+                    <article class="section-card p-5">
+                        <h3 class="text-xl font-black mb-2">正規化參數方向</h3>
+                        <div class="bg-white border-2 border-brand-slate overflow-hidden text-sm">
+                            <table class="w-full text-left">
+                                <thead class="bg-brand-slate text-white"><tr><th class="p-2">模型</th><th class="p-2">參數</th><th class="p-2">正規化強度</th></tr></thead>
+                                <tbody>
+                                    <tr class="border-b"><td class="p-2 font-mono">Ridge / Lasso</td><td class="p-2 font-mono">alpha</td><td class="p-2 font-bold text-brand-green">愈大愈強</td></tr>
+                                    <tr><td class="p-2 font-mono">Logistic / SVC</td><td class="p-2 font-mono">C</td><td class="p-2 font-bold text-red-600">愈小愈強</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article class="section-card p-5">
+                        <h3 class="text-xl font-black mb-2">SMOTE 過取樣</h3>
+                        <p class="text-sm text-slate-600 mb-3">正負樣本差很多時使用。只對訓練資料做，不要對測試資料做。</p>
+                        <div class="code-box"><button class="copy-btn" onclick="copyCode('tip-smote')">COPY</button><div class="code-scroll"><pre id="tip-smote" class="pt-8 text-sm">from imblearn.over_sampling import SMOTE
+
+smote = SMOTE(random_state=42)
+X_train_res, y_train_res = smote.fit_resample(X_train, y_train)
+
+model.fit(X_train_res, y_train_res)</pre></div></div>
+                    </article>
+                </div>
+            </section>
+        </main>
     </div>
 
-    <!-- Toast -->
     <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-brand-slate text-white px-6 py-3 font-bold shadow-hard opacity-0 transition-opacity pointer-events-none z-50">
         Copied to clipboard!
     </div>
 
     <script>
         function switchTab(type) {
-            const r = document.getElementById('content-regression');
-            const c = document.getElementById('content-classification');
-            const br = document.getElementById('btn-regression');
-            const bc = document.getElementById('btn-classification');
-            if(type === 'regression') {
-                r.classList.remove('hidden'); c.classList.add('hidden');
-                br.classList.remove('bg-white', 'text-slate-500', 'opacity-70'); br.classList.add('bg-brand-lightgreen');
-                bc.classList.add('bg-white', 'text-slate-500', 'opacity-70'); bc.classList.remove('bg-brand-blue-100');
+            const reg = document.getElementById('content-regression');
+            const cls = document.getElementById('content-classification');
+            const btnReg = document.getElementById('btn-regression');
+            const btnCls = document.getElementById('btn-classification');
+
+            if (type === 'regression') {
+                reg.classList.remove('hidden');
+                cls.classList.add('hidden');
+                btnReg.className = 'w-full sm:flex-1 bg-brand-lightgreen border-4 border-brand-slate px-4 py-4 text-xl font-bold shadow-hard transition-all';
+                btnCls.className = 'w-full sm:flex-1 bg-white border-4 border-brand-slate px-4 py-4 text-xl font-bold shadow-hard transition-all opacity-70 text-slate-500';
             } else {
-                r.classList.add('hidden'); c.classList.remove('hidden');
-                bc.classList.remove('bg-white', 'text-slate-500', 'opacity-70'); bc.classList.add('bg-brand-lightblue', 'bg-blue-100');
-                br.classList.add('bg-white', 'text-slate-500', 'opacity-70'); br.classList.remove('bg-brand-lightgreen');
+                reg.classList.add('hidden');
+                cls.classList.remove('hidden');
+                btnReg.className = 'w-full sm:flex-1 bg-white border-4 border-brand-slate px-4 py-4 text-xl font-bold shadow-hard transition-all opacity-70 text-slate-500';
+                btnCls.className = 'w-full sm:flex-1 bg-brand-lightblue border-4 border-brand-slate px-4 py-4 text-xl font-bold shadow-hard transition-all';
             }
         }
+
         async function copyCode(id) {
             const text = document.getElementById(id).innerText;
-            await navigator.clipboard.writeText(text);
-            const t = document.getElementById('toast');
-            t.classList.remove('opacity-0');
-            setTimeout(() => t.classList.add('opacity-0'), 2000);
+            try {
+                await navigator.clipboard.writeText(text);
+            } catch (err) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+            }
+            const toast = document.getElementById('toast');
+            toast.classList.remove('opacity-0');
+            setTimeout(() => toast.classList.add('opacity-0'), 1600);
         }
     </script>
 </body>
