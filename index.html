@@ -275,6 +275,11 @@ X_res, y_res = sm.fit_resample(X_train, y_train)</pre>
             <h2 class="text-2xl font-black mb-4 border-b-4 border-brand-slate pb-2">
                 <i class="fas fa-play-circle mr-2 text-brand-blue"></i>標準訓練流程 (Pipeline)
             </h2>
+        <!-- Standard Pipeline Section -->
+        <div class="mt-12 bg-white border-4 border-brand-slate shadow-hard p-6 mb-12">
+            <h2 class="text-2xl font-black mb-4 border-b-4 border-brand-slate pb-2">
+                <i class="fas fa-play-circle mr-2 text-brand-blue"></i>標準訓練流程 (Pipeline)
+            </h2>
             <div class="relative bg-brand-slate text-white p-6 font-mono w-full">
                 <button class="absolute top-2 right-2 bg-white text-brand-slate px-4 py-2 font-bold border-2 border-brand-slate shadow-hard-sm z-20 active:translate-y-1 transition-all" onclick="copyCode('code-pipeline')">COPY FULL CODE</button>
                 <div class="overflow-x-auto w-full">
@@ -296,6 +301,69 @@ score = model.score(X_test, y_test)
 print(f"Accuracy: {score:.4f}")</pre>
                 </div>
             </div>
+        </div>
+
+        <!-- Advanced ML Techniques Section (New from Slides) -->
+        <div class="mt-12 bg-white border-4 border-brand-slate shadow-hard p-6 mb-20">
+            <h2 class="text-2xl font-black mb-6 border-b-4 border-brand-slate pb-2 text-brand-slate">
+                <i class="fas fa-rocket mr-2 text-brand-green"></i>進階實務技巧 (Tips)
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Data Sampling -->
+                <div class="border-2 border-slate-200 p-4">
+                    <h4 class="font-bold text-lg mb-2 text-brand-blue">如何處理過多資料列？</h4>
+                    <ul class="text-sm list-disc ml-5 space-y-1 text-slate-600">
+                        <li>讀取時跳過：<code class="bg-slate-100 px-1 text-pink-600">pd.read_csv(..., skiprows=...)</code></li>
+                        <li>隨機取樣：<code class="bg-slate-100 px-1 text-pink-600">df.sample(frac=0.1)</code></li>
+                    </ul>
+                </div>
+
+                <!-- Column Selection -->
+                <div class="border-2 border-slate-200 p-4">
+                    <h4 class="font-bold text-lg mb-2 text-brand-blue">如何減少資料欄位？</h4>
+                    <ul class="text-sm list-disc ml-5 space-y-1 text-slate-600">
+                        <li>刪除遺漏值過多：<code class="bg-slate-100 px-1 text-pink-600">Series.isnull()</code> 判斷</li>
+                        <li>刪除變異數過小：<code class="bg-slate-100 px-1 text-pink-600">Series.var()</code> 判斷</li>
+                        <li>相關係數篩選：<code class="bg-slate-100 px-1 text-pink-600">df.corr()</code></li>
+                    </ul>
+                </div>
+
+                <!-- Regularization -->
+                <div class="border-2 border-slate-200 p-4">
+                    <h4 class="font-bold text-lg mb-2 text-brand-blue">正規化參數說明</h4>
+                    <table class="text-[11px] w-full border-collapse">
+                        <tr class="bg-slate-100">
+                            <th class="border p-1">模型</th>
+                            <th class="border p-1">參數</th>
+                            <th class="border p-1">說明</th>
+                        </tr>
+                        <tr>
+                            <td class="border p-1 font-mono">Ridge / Lasso</td>
+                            <td class="border p-1 font-mono">alpha</td>
+                            <td class="border p-1">愈大，正規化強度愈高</td>
+                        </tr>
+                        <tr>
+                            <td class="border p-1 font-mono">LogR / SVC</td>
+                            <td class="border p-1 font-mono">C</td>
+                            <td class="border p-1 text-red-600">愈小，正規化強度愈高</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- Model Evaluation -->
+                <div class="border-2 border-slate-200 p-4">
+                    <h4 class="font-bold text-lg mb-2 text-brand-blue">基準模型 (Baseline)</h4>
+                    <p class="text-xs text-slate-500 mb-2">評估模型是否真的有效，應對比：</p>
+                    <ul class="text-sm list-disc ml-5 space-y-1 text-slate-600">
+                        <li>迴歸：使用 <code class="bg-slate-100 px-1">y</code> 的平均值作為預測。</li>
+                        <li>分類：使用眾數或隨機猜測作為預測。</li>
+                        <li>設定：<code class="bg-slate-100 px-1 text-pink-600">class_weight='balanced'</code> 處理不平衡。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
         </div>
     </div>
 
