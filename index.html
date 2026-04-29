@@ -222,31 +222,31 @@ model = OneVsRestClassifier(base_model)</pre>
             </h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <!-- One-Hot -->
+                <!-- One-Hot (sklearn) -->
                 <div class="bg-brand-lightyellow border-4 border-brand-slate p-5 shadow-hard flex flex-col">
-                    <h3 class="text-xl font-black mb-1">獨熱編碼</h3>
-                    <p class="text-xs text-slate-500 mb-3 font-mono">One-Hot Encoding</p>
-                    <p class="text-sm mb-4">針對「無順序性」的類別特徵（如部門、城市）。</p>
+                    <h3 class="text-xl font-black mb-1">獨熱編碼 (Scikit-learn)</h3>
+                    <p class="text-xs text-slate-500 mb-3 font-mono">OneHotEncoder</p>
+                    <p class="text-sm mb-4">正規工作流推薦。可整合進 Pipeline，並處理測試集出現新類別的情況。</p>
                     <div class="relative bg-brand-slate text-yellow-100 p-4 font-mono w-full">
-                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-ohe')">COPY</button>
+                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-ohe-sk')">COPY</button>
                         <div class="overflow-x-auto w-full">
-                            <pre id="code-ohe" class="pt-6 code-text">import pandas as pd
-df_encoded = pd.get_dummies(df, columns=['category_col'])</pre>
+                            <pre id="code-ohe-sk" class="pt-6 code-text">from sklearn.preprocessing import OneHotEncoder
+enc = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
+X_encoded = enc.fit_transform(X[['category_col']])</pre>
                         </div>
                     </div>
                 </div>
 
-                <!-- Label Encoding -->
+                <!-- One-Hot (pandas) -->
                 <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col">
-                    <h3 class="text-xl font-black mb-1">標籤編碼</h3>
-                    <p class="text-xs text-slate-500 mb-3 font-mono">Label Encoding</p>
-                    <p class="text-sm mb-4">針對「有順序性」的類別特徵（如學歷、職等）。</p>
+                    <h3 class="text-xl font-black mb-1">獨熱編碼 (Pandas)</h3>
+                    <p class="text-xs text-slate-500 mb-3 font-mono">get_dummies</p>
+                    <p class="text-sm mb-4">快速探索、視覺化時使用。雖然直觀但較難整合進自動化 Pipeline。</p>
                     <div class="relative bg-brand-slate text-slate-300 p-4 font-mono w-full">
-                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-le')">COPY</button>
+                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-ohe-pd')">COPY</button>
                         <div class="overflow-x-auto w-full">
-                            <pre id="code-le" class="pt-6 code-text">from sklearn.preprocessing import LabelEncoder
-le = LabelEncoder()
-df['col'] = le.fit_transform(df['col'])</pre>
+                            <pre id="code-ohe-pd" class="pt-6 code-text">import pandas as pd
+df_encoded = pd.get_dummies(df, columns=['category_col'])</pre>
                         </div>
                     </div>
                 </div>
