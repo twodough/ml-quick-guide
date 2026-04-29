@@ -40,13 +40,10 @@
     </script>
     <style>
         body { background-color: #F1F5F9; color: #0F172A; overflow-x: hidden; }
-        .btn-active { transform: translate(4px, 4px); box-shadow: 0px 0px 0px 0px rgba(15,23,42,1) !important; }
         pre::-webkit-scrollbar { height: 6px; }
         pre::-webkit-scrollbar-track { background: #0F172A; }
         pre::-webkit-scrollbar-thumb { background-color: #475569; }
-        @media (max-width: 640px) {
-            .code-text { font-size: 0.75rem; line-height: 1.3; }
-        }
+        .code-container { position: relative; background-color: #0F172A; padding: 1.5rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; border: 2px solid #0F172A; }
     </style>
 </head>
 <body class="p-3 sm:p-6 lg:p-8 min-h-screen">
@@ -71,7 +68,7 @@
 
         <!-- Selector -->
         <div class="flex flex-col sm:flex-row justify-center gap-4 mb-8 w-full">
-            <button onclick="switchTab('regression')" id="btn-regression" class="w-full sm:flex-1 bg-brand-lightgreen border-4 border-brand-slate px-4 py-4 text-xl font-bold shadow-hard transition-all active:translate-y-1">
+            <button onclick="switchTab('regression')" id="btn-regression" class="w-full sm:flex-1 bg-brand-lightgreen border-4 border-brand-slate px-4 py-4 text-xl font-bold shadow-hard transition-all">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
                         <i class="fas fa-chart-line text-2xl mr-3 text-brand-green"></i>
@@ -95,186 +92,166 @@
         <div id="content-regression" class="block">
             <div class="bg-brand-green text-white p-4 border-4 border-brand-slate shadow-hard mb-8 flex items-center">
                 <i class="fas fa-info-circle text-2xl mr-3"></i>
-                <p class="font-medium">應用情境：目標變數 (y) 為連續型數值（例如：預測金額、溫度、分數）。</p>
+                <p class="font-medium">應用情境：目標變數 (y) 為數值。範例：預測金額、溫度、房價。</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <!-- Linear -->
                 <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col border-t-8 border-t-slate-400">
-                    <h3 class="text-xl font-black mb-1">線性迴歸</h3>
-                    <p class="text-xs text-slate-500 mb-3 font-mono">Linear Regression</p>
-                    <p class="text-sm flex-grow mb-4">解釋性高，適用於觀察特徵與目標間的線性關聯。</p>
-                    <div class="relative bg-brand-slate text-slate-300 p-4 font-mono w-full">
-                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-lr')">COPY</button>
-                        <div class="overflow-x-auto w-full">
-                            <pre id="code-lr" class="pt-6 code-text">from sklearn.linear_model import LinearRegression
+                    <h3 class="text-lg font-black mb-1">線性迴歸</h3>
+                    <div class="code-container mt-auto">
+                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-lr')">COPY</button>
+                        <pre id="c-lr" class="text-slate-300 text-xs">from sklearn.linear_model import LinearRegression
 model = LinearRegression()</pre>
-                        </div>
+                    </div>
+                </div>
+
+                <!-- Lasso -->
+                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col border-t-8 border-t-brand-green">
+                    <h3 class="text-lg font-black mb-1">Lasso 迴歸</h3>
+                    <p class="text-[10px] text-slate-500 mb-2">含 L1 正規化，可篩選特徵</p>
+                    <div class="code-container mt-auto">
+                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-lasso')">COPY</button>
+                        <pre id="c-lasso" class="text-green-300 text-xs">from sklearn.linear_model import Lasso
+model = Lasso(alpha=1.0)</pre>
                     </div>
                 </div>
 
                 <!-- Random Forest -->
                 <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col border-t-8 border-t-brand-green">
-                    <h3 class="text-xl font-black mb-1">隨機森林</h3>
-                    <p class="text-xs text-slate-500 mb-3 font-mono">Random Forest Regressor</p>
-                    <p class="text-sm flex-grow mb-4">穩定度高、抗雜訊強。實務上推薦作為 Baseline 模型。</p>
-                    <div class="relative bg-brand-slate text-green-300 p-4 font-mono w-full">
-                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-rfr')">COPY</button>
-                        <div class="overflow-x-auto w-full">
-                            <pre id="code-rfr" class="pt-6 code-text">from sklearn.ensemble import RandomForestRegressor
-model = RandomForestRegressor(random_state=42)</pre>
-                        </div>
+                    <h3 class="text-lg font-black mb-1">隨機森林</h3>
+                    <div class="code-container mt-auto">
+                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-rfr')">COPY</button>
+                        <pre id="c-rfr" class="text-green-300 text-xs">from sklearn.ensemble import RandomForestRegressor
+model = RandomForestRegressor()</pre>
                     </div>
                 </div>
 
                 <!-- XGBoost -->
                 <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col border-t-8 border-t-brand-yellow">
-                    <h3 class="text-xl font-black mb-1">XGBoost</h3>
-                    <p class="text-xs text-slate-500 mb-3 font-mono">XGBRegressor</p>
-                    <p class="text-sm flex-grow mb-4">效能強大，適合追求極致準確率的任務。</p>
-                    <div class="relative bg-brand-slate text-yellow-300 p-4 font-mono w-full">
-                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-xgbr')">COPY</button>
-                        <div class="overflow-x-auto w-full">
-                            <pre id="code-xgbr" class="pt-6 code-text">from xgboost import XGBRegressor
-model = XGBRegressor(n_estimators=100)</pre>
-                        </div>
+                    <h3 class="text-lg font-black mb-1">XGBoost</h3>
+                    <div class="code-container mt-auto">
+                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-xgbr')">COPY</button>
+                        <pre id="c-xgbr" class="text-yellow-300 text-xs">from xgboost import XGBRegressor
+model = XGBRegressor()</pre>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- CLASSIFICATION (HIDDEN BY DEFAULT) -->
+        <!-- CLASSIFICATION -->
         <div id="content-classification" class="hidden">
             <div class="bg-brand-blue text-white p-4 border-4 border-brand-slate shadow-hard mb-8 flex items-center">
                 <i class="fas fa-info-circle text-2xl mr-3"></i>
-                <p class="font-medium">應用情境：目標變數 (y) 為離散類別（例如：客戶流失預測、信用卡盜刷偵測、違約風險評估）。</p>
+                <p class="font-medium">應用情境：目標變數 (y) 為類別。範例：預測流失、違約、垃圾郵件。</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <!-- Logistic -->
                 <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col border-t-8 border-t-slate-400">
-                    <h3 class="text-xl font-black mb-1">羅吉斯迴歸</h3>
-                    <p class="text-xs text-slate-500 mb-3 font-mono">Logistic Regression</p>
-                    <p class="text-sm flex-grow mb-4">基礎分類器。輸出結果附帶機率意義，利於風險評估與後續決策設定閾值。</p>
-                    <div class="relative bg-brand-slate text-slate-300 p-4 font-mono w-full">
-                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-logr')">COPY</button>
-                        <div class="overflow-x-auto w-full">
-                            <pre id="code-logr" class="pt-6 code-text">from sklearn.linear_model import LogisticRegression
+                    <h3 class="text-lg font-black mb-1">羅吉斯迴歸</h3>
+                    <div class="code-container mt-auto">
+                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-logr')">COPY</button>
+                        <pre id="c-logr" class="text-slate-300 text-xs">from sklearn.linear_model import LogisticRegression
 model = LogisticRegression()</pre>
-                        </div>
+                    </div>
+                </div>
+
+                <!-- SVC -->
+                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col border-t-8 border-t-brand-blue">
+                    <h3 class="text-lg font-black mb-1">支持向量機</h3>
+                    <p class="text-[10px] text-slate-500 mb-2">SVM 分類器</p>
+                    <div class="code-container mt-auto">
+                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-svc')">COPY</button>
+                        <pre id="c-svc" class="text-blue-300 text-xs">from sklearn. some_package import SVC # 教材多用 SVC
+from sklearn.svc import SVC
+model = SVC(probability=True)</pre>
                     </div>
                 </div>
 
                 <!-- Random Forest Cls -->
                 <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col border-t-8 border-t-brand-blue">
-                    <h3 class="text-xl font-black mb-1">隨機森林</h3>
-                    <p class="text-xs text-slate-500 mb-3 font-mono">Random Forest Classifier</p>
-                    <p class="text-sm flex-grow mb-4">最通用的分類模型，透過多棵決策樹投票，能有效處理特徵間的非線性關係。</p>
-                    <div class="relative bg-brand-slate text-blue-300 p-4 font-mono w-full">
-                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-rfc')">COPY</button>
-                        <div class="overflow-x-auto w-full">
-                            <pre id="code-rfc" class="pt-6 code-text">from sklearn.ensemble import RandomForestClassifier
-model = RandomForestClassifier(random_state=42)</pre>
-                        </div>
+                    <h3 class="text-lg font-black mb-1">隨機森林</h3>
+                    <div class="code-container mt-auto">
+                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-rfc')">COPY</button>
+                        <pre id="c-rfc" class="text-blue-300 text-xs">from sklearn.ensemble import RandomForestClassifier
+model = RandomForestClassifier()</pre>
                     </div>
                 </div>
 
                 <!-- XGBoost Cls -->
                 <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col border-t-8 border-t-brand-yellow">
-                    <h3 class="text-xl font-black mb-1">XGBoost</h3>
-                    <p class="text-xs text-slate-500 mb-3 font-mono">XGBClassifier</p>
-                    <p class="text-sm flex-grow mb-4">效能頂尖的 Boosting 演算法，在各類競賽與實務任務中表現卓越。</p>
-                    <div class="relative bg-brand-slate text-yellow-300 p-4 font-mono w-full">
-                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-xgbc')">COPY</button>
-                        <div class="overflow-x-auto w-full">
-                            <pre id="code-xgbc" class="pt-6 code-text">from xgboost import XGBClassifier
+                    <h3 class="text-lg font-black mb-1">XGBoost</h3>
+                    <div class="code-container mt-auto">
+                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-xgbc')">COPY</button>
+                        <pre id="c-xgbc" class="text-yellow-300 text-xs">from xgboost import XGBClassifier
 model = XGBClassifier()</pre>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Multi-class Section -->
-            <div class="bg-white border-4 border-brand-slate p-6 shadow-hard mb-12">
-                <h3 class="text-xl font-black mb-4 flex items-center">
-                    <i class="fas fa-layer-group mr-2 text-brand-blue"></i>多類別分類策略 (Multi-class)
-                </h3>
-                <p class="text-sm mb-6 text-slate-700 bg-brand-lightblue p-3 border-l-4 border-brand-blue">
-                    當目標變數包含 3 個或以上的類別（例如：風險等級 A, B, C）時，可使用 OvR (One-vs-Rest) 策略。
-                </p>
-                <div class="relative bg-brand-slate text-white p-4 font-mono w-full">
-                    <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-ovr')">COPY</button>
-                    <div class="overflow-x-auto w-full">
-                        <pre id="code-ovr" class="pt-6 code-text">from sklearn.multiclass import OneVsRestClassifier
-from sklearn.linear_model import LogisticRegression
-
-base_model = LogisticRegression()
-model = OneVsRestClassifier(base_model)</pre>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Preprocessing Section -->
-        <div class="mt-12 bg-white border-4 border-brand-slate shadow-hard p-6">
+        <!-- The Essential Pipeline -->
+        <div class="mt-12 bg-white border-4 border-brand-slate shadow-hard p-6 mb-12">
+            <h2 class="text-2xl font-black mb-4 border-b-4 border-brand-slate pb-2">
+                <i class="fas fa-play-circle mr-2 text-brand-blue"></i>標準訓練與預測流程 (Pipeline)
+            </h2>
+            <p class="text-sm mb-4 text-slate-600">這是每個機器學習專案的基本框架，只需將模型部分替換即可。</p>
+            <div class="relative bg-brand-slate text-white p-6 font-mono w-full">
+                <button class="absolute top-2 right-2 bg-white text-brand-slate px-4 py-2 font-bold border-2 border-brand-slate shadow-hard-sm z-20 active:translate-y-1 transition-all" onclick="copyCode('main-pipeline')">COPY TEMPLATE</button>
+                <div class="overflow-x-auto w-full">
+                    <pre id="main-pipeline" class="text-sm leading-relaxed">
+# 1. 準備資料 (假設 X 是特徵, y 是目標)
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+# 2. 初始化模型 (範例：在這裡換成 Lasso, RandomForest 等)
+# model = Lasso(alpha=1.0) <--- 像這樣換掉
+from sklearn.ensemble import RandomForestClassifier
+model = RandomForestClassifier()
+
+# 3. 訓練模型
+model.fit(X_train, y_train)
+
+# 4. 進行預測
+y_pred = model.predict(X_test)
+
+# 5. 評估準確度
+accuracy = model.score(X_test, y_test)
+print(f"Accuracy: {accuracy}")</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preprocessing -->
+        <div class="mt-12 bg-white border-4 border-brand-slate shadow-hard p-6 mb-12">
             <h2 class="text-2xl font-black mb-4 border-b-4 border-brand-slate pb-2">
                 <i class="fas fa-tools mr-2 text-brand-yellow"></i>資料前處理 (Preprocessing)
             </h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <!-- One-Hot (sklearn) -->
-                <div class="bg-brand-lightyellow border-4 border-brand-slate p-5 shadow-hard flex flex-col">
-                    <h3 class="text-xl font-black mb-1">獨熱編碼 (Scikit-learn)</h3>
-                    <p class="text-xs text-slate-500 mb-3 font-mono">OneHotEncoder</p>
-                    <p class="text-sm mb-4">正規工作流推薦。可整合進 Pipeline，並處理測試集出現新類別的情況。</p>
-                    <div class="relative bg-brand-slate text-yellow-100 p-4 font-mono w-full">
-                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-ohe-sk')">COPY</button>
-                        <div class="overflow-x-auto w-full">
-                            <pre id="code-ohe-sk" class="pt-6 code-text">from sklearn.preprocessing import OneHotEncoder
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- OHE -->
+                <div class="bg-brand-lightyellow border-4 border-brand-slate p-5 shadow-hard">
+                    <h3 class="font-black mb-2">獨熱編碼 (Sklearn)</h3>
+                    <div class="code-container">
+                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-ohe')">COPY</button>
+                        <pre id="c-ohe" class="text-xs text-slate-300">from sklearn.preprocessing import OneHotEncoder
 enc = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
-X_encoded = enc.fit_transform(X[['category_col']])</pre>
-                        </div>
+X_train_encoded = enc.fit_transform(X_train[['category_col']])</pre>
                     </div>
                 </div>
-
-                <!-- One-Hot (pandas) -->
-                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col">
-                    <h3 class="text-xl font-black mb-1">獨熱編碼 (Pandas)</h3>
-                    <p class="text-xs text-slate-500 mb-3 font-mono">get_dummies</p>
-                    <p class="text-sm mb-4">快速探索、視覺化時使用。雖然直觀但較難整合進自動化 Pipeline。</p>
-                    <div class="relative bg-brand-slate text-slate-300 p-4 font-mono w-full">
-                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-ohe-pd')">COPY</button>
-                        <div class="overflow-x-auto w-full">
-                            <pre id="code-ohe-pd" class="pt-6 code-text">import pandas as pd
-df_encoded = pd.get_dummies(df, columns=['category_col'])</pre>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Imbalanced Data -->
-            <div class="bg-slate-100 border-4 border-brand-slate p-6 shadow-hard mb-8">
-                <h3 class="text-xl font-black mb-4 flex items-center">
-                    <i class="fas fa-balance-scale mr-2 text-red-600"></i>不平衡資料處理 (Imbalanced Data)
-                </h3>
-                <p class="text-sm mb-6 text-slate-700">當正負樣本比例懸殊時（如盜刷僅 1%），建議使用過取樣 (Over-sampling)。</p>
-                <div class="relative bg-brand-slate text-white p-4 font-mono w-full">
-                    <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm active:translate-y-0.5 transition-all" onclick="copyCode('code-smote')">COPY</button>
-                    <div class="overflow-x-auto w-full">
-                        <pre id="code-smote" class="pt-6 code-text"># 需安裝 imbalanced-learn
-from imblearn.over_sampling import SMOTE
-sm = SMOTE(random_state=42)
-X_res, y_res = sm.fit_resample(X_train, y_train)</pre>
+                <!-- Scaler -->
+                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard">
+                    <h3 class="font-black mb-2">特徵縮放 (StandardScaler)</h3>
+                    <div class="code-container">
+                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('c-ss')">COPY</button>
+                        <pre id="c-ss" class="text-xs text-slate-300">from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)</pre>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Standard Pipeline Section -->
-        <div class="mt-12 bg-white border-4 border-brand-slate shadow-hard p-6 mb-20">
-            <h2 class="text-2xl font-black mb-4 border-b-4 border-brand-slate pb-2">
-                <i class="fas fa-play-circle mr-2 text-brand-blue"></i>標準訓練流程 (Pipeline)
-            </h2>
         <!-- Advanced ML Techniques Section -->
         <div class="mt-12 mb-24">
             <h2 class="text-2xl font-black mb-6 border-b-4 border-brand-slate pb-2 text-brand-slate">
@@ -285,87 +262,34 @@ X_res, y_res = sm.fit_resample(X_train, y_train)</pre>
                 <!-- Data Sampling -->
                 <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col">
                     <h3 class="text-xl font-black mb-1">大量資料抽樣</h3>
-                    <p class="text-sm text-slate-500 mb-3">當原始資料太大跑不動時，使用隨機取樣。</p>
-                    <div class="relative bg-brand-slate text-slate-300 p-4 font-mono w-full">
-                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm" onclick="copyCode('code-sampling')">COPY</button>
-                        <div class="overflow-x-auto w-full">
-                            <pre id="code-sampling" class="pt-6 code-text"># 隨機取樣 10% 的資料
-df_sample = df.sample(frac=0.1, random_state=42)
-
-# 或者手動跳過讀取行數 (於 read_csv 使用)
-# df = pd.read_csv('big_data.csv', skiprows=lambda i: i > 0 and random.random() > 0.1)</pre>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Column Selection -->
-                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col">
-                    <h3 class="text-xl font-black mb-1">特徵欄位篩選</h3>
-                    <p class="text-sm text-slate-500 mb-3">排除遺漏值過多或變異數過小的無用特徵。</p>
-                    <div class="relative bg-brand-slate text-slate-300 p-4 font-mono w-full">
-                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm" onclick="copyCode('code-selection')">COPY</button>
-                        <div class="overflow-x-auto w-full">
-                            <pre id="code-selection" class="pt-6 code-text"># 檢查遺漏值比例
-null_ratio = df.isnull().mean()
-df_filtered = df.loc[:, null_ratio < 0.5]
-
-# 檢查變異數 (排除數值幾乎都一樣的欄位)
-df_num = df.select_dtypes(include='number')
-low_var = df_num.columns[df_num.var() < 0.01]</pre>
-                        </div>
+                    <div class="code-container mt-2">
+                        <button class="absolute top-1 right-1 bg-white text-brand-slate text-[10px] px-1 font-bold border" onclick="copyCode('code-sampling')">COPY</button>
+                        <pre id="code-sampling" class="text-xs text-slate-300"># 隨機取樣 10% 資料
+df_sample = df.sample(frac=0.1, random_state=42)</pre>
                     </div>
                 </div>
 
                 <!-- Regularization Table -->
                 <div class="bg-brand-lightblue border-4 border-brand-slate p-5 shadow-hard flex flex-col">
-                    <h3 class="text-xl font-black mb-1">正規化強度對照</h3>
-                    <p class="text-sm text-slate-700 mb-4">防止過擬合的參數調整方向。</p>
-                    <div class="bg-white border-2 border-brand-slate overflow-hidden">
-                        <table class="w-full text-left text-sm">
-                            <thead class="bg-brand-slate text-white font-bold">
-                                <tr>
-                                    <th class="p-2 border-r border-slate-600">模型</th>
-                                    <th class="p-2 border-r border-slate-600">參數</th>
-                                    <th class="p-2">強度方向</th>
-                                </tr>
+                    <h3 class="text-xl font-black mb-1">正規化參數對照</h3>
+                    <div class="bg-white border-2 border-brand-slate overflow-hidden mt-2 text-[10px]">
+                        <table class="w-full text-left">
+                            <thead class="bg-brand-slate text-white">
+                                <tr><th class="p-1">模型</th><th class="p-1">參數</th><th class="p-1">強度方向</th></tr>
                             </thead>
-                            <tbody class="text-xs">
-                                <tr class="border-b border-brand-slate">
-                                    <td class="p-2 font-mono">Ridge / Lasso</td>
-                                    <td class="p-2 font-mono">alpha</td>
-                                    <td class="p-2 font-bold text-brand-green">愈大愈強 (獎勵簡單模型)</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-2 font-mono">LogR / SVC</td>
-                                    <td class="p-2 font-mono">C</td>
-                                    <td class="p-2 font-bold text-red-600">愈小愈強 (對抗雜訊)</td>
-                                </tr>
+                            <tbody>
+                                <tr class="border-b"><td class="p-1 font-mono">Ridge / Lasso</td><td class="p-1 font-mono">alpha</td><td class="p-1 text-brand-green">愈大愈強</td></tr>
+                                <tr><td class="p-1 font-mono">LogR / SVC</td><td class="p-1 font-mono">C</td><td class="p-1 text-red-600">愈小愈強</td></tr>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-
-                <!-- Imbalanced Handling -->
-                <div class="bg-white border-4 border-brand-slate p-5 shadow-hard flex flex-col">
-                    <h3 class="text-xl font-black mb-1">內建不平衡處理</h3>
-                    <p class="text-sm text-slate-500 mb-3">不用 SMOTE 也能處理類別權重。</p>
-                    <div class="relative bg-brand-slate text-slate-300 p-4 font-mono w-full">
-                        <button class="absolute top-2 right-2 bg-white text-brand-slate text-xs px-2 py-1 font-bold border-2 border-brand-slate z-20 shadow-hard-sm" onclick="copyCode('code-weight')">COPY</button>
-                        <div class="overflow-x-auto w-full">
-                            <pre id="code-weight" class="pt-6 code-text"># 在初始化模型時加入此參數
-model = RandomForestClassifier(class_weight='balanced')
-model = LogisticRegression(class_weight='balanced')</pre>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-        </div>
-    </div>
 
     <!-- Toast -->
-    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-brand-slate text-white px-6 py-3 font-bold shadow-hard opacity-0 transition-opacity pointer-events-none">
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-brand-slate text-white px-6 py-3 font-bold shadow-hard opacity-0 transition-opacity pointer-events-none z-50">
         Copied to clipboard!
     </div>
 
@@ -375,18 +299,16 @@ model = LogisticRegression(class_weight='balanced')</pre>
             const c = document.getElementById('content-classification');
             const br = document.getElementById('btn-regression');
             const bc = document.getElementById('btn-classification');
-            
             if(type === 'regression') {
                 r.classList.remove('hidden'); c.classList.add('hidden');
                 br.classList.remove('bg-white', 'text-slate-500', 'opacity-70'); br.classList.add('bg-brand-lightgreen');
-                bc.classList.add('bg-white', 'text-slate-500', 'opacity-70'); bc.classList.remove('bg-brand-lightblue');
+                bc.classList.add('bg-white', 'text-slate-500', 'opacity-70'); bc.classList.remove('bg-brand-blue-100');
             } else {
                 r.classList.add('hidden'); c.classList.remove('hidden');
                 bc.classList.remove('bg-white', 'text-slate-500', 'opacity-70'); bc.classList.add('bg-brand-lightblue', 'bg-blue-100');
                 br.classList.add('bg-white', 'text-slate-500', 'opacity-70'); br.classList.remove('bg-brand-lightgreen');
             }
         }
-
         async function copyCode(id) {
             const text = document.getElementById(id).innerText;
             await navigator.clipboard.writeText(text);
