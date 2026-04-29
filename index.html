@@ -275,34 +275,6 @@ X_res, y_res = sm.fit_resample(X_train, y_train)</pre>
             <h2 class="text-2xl font-black mb-4 border-b-4 border-brand-slate pb-2">
                 <i class="fas fa-play-circle mr-2 text-brand-blue"></i>標準訓練流程 (Pipeline)
             </h2>
-        <!-- Standard Pipeline Section -->
-        <div class="mt-12 bg-white border-4 border-brand-slate shadow-hard p-6 mb-12">
-            <h2 class="text-2xl font-black mb-4 border-b-4 border-brand-slate pb-2">
-                <i class="fas fa-play-circle mr-2 text-brand-blue"></i>標準訓練流程 (Pipeline)
-            </h2>
-            <div class="relative bg-brand-slate text-white p-6 font-mono w-full">
-                <button class="absolute top-2 right-2 bg-white text-brand-slate px-4 py-2 font-bold border-2 border-brand-slate shadow-hard-sm z-20 active:translate-y-1 transition-all" onclick="copyCode('code-pipeline')">COPY FULL CODE</button>
-                <div class="overflow-x-auto w-full">
-                    <pre id="code-pipeline" class="text-sm leading-relaxed pt-10">
-# 1. 切分資料
-from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# 2. 初始化模型
-from sklearn.ensemble import RandomForestClassifier
-model = RandomForestClassifier(random_state=42)
-
-# 3. 訓練與預測
-model.fit(X_train, y_train)
-y_pred = model.predict(X_test)
-
-# 4. 評估分數
-score = model.score(X_test, y_test)
-print(f"Accuracy: {score:.4f}")</pre>
-                </div>
-            </div>
-        </div>
-
         <!-- Advanced ML Techniques Section -->
         <div class="mt-12 mb-24">
             <h2 class="text-2xl font-black mb-6 border-b-4 border-brand-slate pb-2 text-brand-slate">
